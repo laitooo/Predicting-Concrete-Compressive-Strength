@@ -40,28 +40,36 @@ print('test output size:', y_test.shape)
 
 #print('plot shows cement before and after normalization')
 #utils.plotSingleRow(x_train[:,0], "cement o.p.c")
-print('normalizing data ...')
-x_train = ((x_train - x_train.min())/(x_train.max() - x_train.min()))
-print('data normalized ')
+#print('normalizing data ...')
+#x_train = ((x_train - x_train.min())/(x_train.max() - x_train.min()))
+#print('data normalized ')
 #utils.plotSingleRow(x_train[:,0], "cement o.p.c")
 
 print('initializing model ...')
+learning_rate = 0.05
+epochs = 2000
 n1 = 10
 n2 = 5
 n3 = 2
 w1 = np.random.rand(n_train, n1) # (6,10)
-b1 = np.random.rand(n1)          # (10,1)
+b1 = np.zeros((n1))              # (10,1)
 w2 = np.random.rand(n1, n2)      # (10,5)
-b2 = np.random.rand(n2)          # (5,1)
+b2 = np.zeros((n2))              # (5,1)
 w3 = np.random.rand(n2, n3)      # (5,2)
-b3 = np.random.rand(n3)          # (2,1)
+b3 = np.zeros((n3))              # (2,1)
 
-print('one backward propagation ...')
-A3, Z3, A2, Z2, A1, Z1 = utils.forwadProbagationStep(x_train, w1, b1, w2, b2, w3, b3)
-cost =  utils.costFunction(y_train, A3)
-print('done.')
-print('cost:', cost)
+print('started trainning ...')
+for i in range(epochs):
+    A3, Z3, A2, Z2, A1, Z1 = utils.forwadProbagationStep(x_train, w1, b1, w2, b2, w3, b3)
+    dw3 , db3, dw2, db2, dw1, db1 = utils.backwardPropagationStep(y_train, A3, Z3, w3, A2, Z2, w2, A1, Z1, x_train)
 
-print('one backward propagation ...')
-dw3 , db3, dw2, db2, dw1, db1 = utils.backwardPropagationStep(y_train, A3, Z3, w3, A2, Z2, w2, A1, Z1, x_train)
-print('done.')
+    w3 = w3 - (learning_rate * dw3)
+    b3 = b3 - (learning_rate * db3)
+    w2 = w2 - (learning_rate * dw2)
+    b2 = b2 - (learning_rate * db2)
+    w1 = w1 - (learning_rate * dw1)
+    b1 = b1 - (learning_rate * db1)
+
+    cost =  utils.costFunction(y_train, A3)
+    accuracy = utils.get_accuracy_value(y_train, A3)
+    print('epoch', i, 'cost:', cost, 'accuracy:', accuracy)    
