@@ -3,12 +3,13 @@ import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
 
-x_train, y_train, x_test, y_test, _ = data.getData()
+x_train, y_train, x_test, y_test, _ = data.getTestData()
+
 print('preparing model ...')
 
 model = Sequential()
 model.add(Dense(20, activation='relu'))
-model.add(Dense(10, activation='relu'))
+model.add(Dense(10, activation='sigmoid'))
 model.add(Dense(5, activation='relu'))
 model.add(Dense(2))
 
