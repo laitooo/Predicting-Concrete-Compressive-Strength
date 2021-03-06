@@ -7,11 +7,11 @@ const Server = require('socket.io');
 
 //const hostname ='192.168.42.53'
 const hostname = '0.0.0.0'
-const port = 3001;
+const port = 3000;
 
 app = express();
 server = http.createServer(app);
-var io = Server(port);
+var io = Server(3001);
 io.listen(server);
 
 
