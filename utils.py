@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from keras.models import Model
-from keras.layers import *
 import os
 import tensorflow as tf
 

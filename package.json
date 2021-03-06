@@ -1,0 +1,25 @@
+{
+  "name": "predicting-concrete-compressive-strength",
+  "version": "1.0.0",
+  "description": "Using Machine learning to predict the compressive strength of a concrete mixture",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laitooo/Predicting-Concrete-Compressive-Strength.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laitooo/Predicting-Concrete-Compressive-Strength/issues"
+  },
+  "homepage": "https://github.com/laitooo/Predicting-Concrete-Compressive-Strength#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "pm2": "^4.5.5",
+    "socket.io": "^3.1.2"
+  }
+}
