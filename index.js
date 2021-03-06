@@ -11,7 +11,7 @@ const port = 3000;
 
 app = express();
 server = http.createServer(app);
-var io = Server(3001);
+var io = Server();
 io.listen(server);
 
 
