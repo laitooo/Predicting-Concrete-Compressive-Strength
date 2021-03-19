@@ -8,6 +8,7 @@ from keras.layers import Dense, LayerNormalization, Dropout
 
 SAVE_GRAPH = False
 SAVE_WEIGHTS = False
+SAVE_MODEL = True
 LOAD_WEIGHTS = True
 
 tf.compat.v1.disable_eager_execution()
@@ -37,6 +38,11 @@ if(LOAD_WEIGHTS):
 model.compile(loss='mean_squared_error', optimizer='adam', metrics=[tf.keras.metrics.MeanSquaredError()])
 model.fit(x_train, y_train, epochs=1000, batch_size=32, validation_data=(x_test, y_test))
 print('starting training ...')
+
+if(SAVE_MODEL):
+	print('saving model ...')
+	model.save("my_model")
+	print('model saved')
 
 if(SAVE_WEIGHTS):
 	print('saving model weights ...')

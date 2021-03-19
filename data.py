@@ -24,14 +24,14 @@ def getData():
     print('dividing the data ...')
     m_train = math.ceil(m * 0.75)
     train = data[0:m_train,:]
-    x_train = train[:,0:6]
-    y_train = train[:,6:8]
+    x_train = train[:,1:7]
+    y_train = train[:,7:9]
     print('training data ready with size:', train.shape)
     print('training input size:', x_train.shape)
     print('training output size:', y_train.shape)
     test = data[m_train:,:]
-    x_test = test[:,0:6]
-    y_test = test[:,6:8]
+    x_test = test[:,1:7]
+    y_test = test[:,7:9]
     n = x_train.shape[1]
     print('test data ready with size:', test.shape)
     print('test input size:', x_test.shape)
