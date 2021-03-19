@@ -13,6 +13,6 @@ model = keras.models.load_model("my_model")
 x = np.array([[float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]), 
     float(sys.argv[4]), float(sys.argv[5]), float(sys.argv[6])]])
 y_hat = np.around(model.predict(x), 1)
-y = np.array([[33.1, 39.1]])
+y = np.array([[26.2, 33]])
 
 print('prediction:', y_hat, ' real:', y)
