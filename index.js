@@ -24,7 +24,7 @@ app.use(express.static(dir));
 
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/predict', function (req, res) {
     // 360, 0.45, 160, 1880, 715, 1165
@@ -33,6 +33,22 @@ app.get('/predict', function (req, res) {
         pythonOptions: ['-u'], // get print results in real-time
         scriptPath: '.',
         args: [360, 0.45, 160, 1880, 715, 1165]
+      };
+
+    PythonShell.run('predict.py', options, function (err, results) {
+        if (err) throw err;
+        // results is an array consisting of messages collected during execution
+        res.send(results)
+      });
+})
+
+app.post('/predict2', function (req, res) {    
+    let options = {
+        mode: 'text',
+        pythonOptions: ['-u'], // get print results in real-time
+        scriptPath: '.',
+        args: [req.body.cement, req.body.w_c, req.body.water, req.body.total,
+           req.body.fine, req.body.coarse]
       };
 
     PythonShell.run('predict.py', options, function (err, results) {
