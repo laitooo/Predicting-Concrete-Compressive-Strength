@@ -5,10 +5,12 @@ import numpy as np
 import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Dense, LayerNormalization, Dropout
+import tensorflowjs as tfjs
 
 SAVE_GRAPH = False
 SAVE_WEIGHTS = False
 LOAD_WEIGHTS = True
+CONVERT_TO_JS = True
 
 tf.compat.v1.disable_eager_execution()
 
@@ -63,3 +65,9 @@ if(SAVE_GRAPH):
 	output_dir = os.path.join(os.getcwd(),"concrete")
 	utils.keras_to_tensorflow(model,output_dir=output_dir,model_name="concrete.pb",log_tensorboard=True)
 	print("MODEL SAVED")
+
+if(CONVERT_TO_JS):
+	print('converting keras model to tesnorflowjs ...')
+	output_dir = os.path.join(os.getcwd(),"tfjs")
+	tfjs.converters.save_keras_model(model, output_dir,)
+	print('converted model to tesnorflowjs')
