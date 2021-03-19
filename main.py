@@ -8,8 +8,8 @@ from keras.layers import Dense, LayerNormalization, Dropout
 
 SAVE_GRAPH = False
 SAVE_WEIGHTS = False
-SAVE_MODEL = True
-LOAD_WEIGHTS = True
+SAVE_MODEL = False
+LOAD_WEIGHTS = False
 
 tf.compat.v1.disable_eager_execution()
 

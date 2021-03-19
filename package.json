@@ -4,31 +4,26 @@
     "description": "Using Machine learning to predict the compressive strength of a concrete mixture",
     "main": "index.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node index.js"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js"
     },
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/laitooo/Predicting-Concrete-Compressive-Strength.git"
+        "type": "git",
+        "url": "git+https://github.com/laitooo/Predicting-Concrete-Compressive-Strength.git"
     },
     "author": "",
     "license": "ISC",
     "bugs": {
-      "url": "https://github.com/laitooo/Predicting-Concrete-Compressive-Strength/issues"
+        "url": "https://github.com/laitooo/Predicting-Concrete-Compressive-Strength/issues"
     },
     "homepage": "https://github.com/laitooo/Predicting-Concrete-Compressive-Strength#readme",
     "dependencies": {
-      "@tensorflow/tfjs": "^3.3.0",
-      "express": "^4.17.1",
-      "install": "^0.13.0",
-      "moment": "^2.29.1",
-      "node-gyp": "^7.1.2",
-      "node-pre-gyp": "^0.17.0",
-      "nodemon": "^2.0.7",
-      "pm2": "^4.5.5",
-      "socket.io": "^3.1.2"
-    },
-    "devDependencies": {
-      "node-pre-gyp": "0.12.0"
+        "express": "^4.17.1",
+        "install": "^0.13.0",
+        "moment": "^2.29.1",
+        "nodemon": "^2.0.7",
+        "pm2": "^4.5.5",
+        "python-shell": "^2.0.3",
+        "socket.io": "^3.1.2"
     }
-  }
+}

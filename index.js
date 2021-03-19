@@ -5,6 +5,7 @@ var moment = require('moment');
 const {spawn} = require('child_process');
 const path = require('path');
 const Server = require('socket.io');
+let {PythonShell} = require('python-shell')
 
 //const hostname ='192.168.42.53'
 const hostname = '0.0.0.0'
@@ -26,20 +27,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/predict', function (req, res) {
-	var dataToSend;
-    const python = spawn('python3', ['predict.py']);
-    python.stdout.on('data', function (data) {
-        console.log('Pipe data from python script ...');
-        dataToSend = data.toString();
-    });
-    python.on('close', (code) => {
-    console.log(`child process close all stdio with code ${code}`);
-        res.send(dataToSend)
-    });
+    // 360, 0.45, 160, 1880, 715, 1165
+    let options = {
+        mode: 'text',
+        pythonOptions: ['-u'], // get print results in real-time
+        scriptPath: '.',
+        args: [360, 0.45, 160, 1880, 715, 1165]
+      };
+
+    PythonShell.run('predict.py', options, function (err, results) {
+        if (err) throw err;
+        // results is an array consisting of messages collected during execution
+        res.send(results)
+      });
 })
 
 server.listen(port, hostname, () => {
 	console.log(`AI compressive strength server started`);
-	console.log(`server url : http://${hostname}:${port}/`);
+	console.log(`server url : http://${hostname}:${port}/predict`);
 	console.log("started at " + moment().format('YYYY-MM-DD HH:mm Z') + '\n\n');
 });
