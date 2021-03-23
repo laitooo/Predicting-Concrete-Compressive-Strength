@@ -6,6 +6,8 @@ import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Dense, LayerNormalization, Dropout
 
+num_epochs = 2000
+
 print('loading the data ...')
 data = pd.read_excel('./test_data_v1.xlsx', header=1)   
 data = np.array(data)
@@ -99,7 +101,7 @@ model2.add(Dense(5, activation='relu'))
 model2.add(Dense(1))
 
 model.compile(loss='mean_squared_error', optimizer='adam', metrics=[tf.keras.metrics.MeanSquaredError()])
-model.fit(x_train, y_train, epochs=1000, batch_size=32, validation_data=(x_test, y_test))
+model.fit(x_train, y_train, epochs=num_epochs, batch_size=32, validation_data=(x_test, y_test))
 print('starting training ...')
 
 _, accuracy_train = model.evaluate(x_train, y_train)
@@ -107,7 +109,7 @@ _, accuracy_test = model.evaluate(x_test, y_test)
 print('model trained')
 
 model2.compile(loss='mean_squared_error', optimizer='adam', metrics=[tf.keras.metrics.MeanSquaredError()])
-model2.fit(x_train2, y_train2, epochs=1000, batch_size=32, validation_data=(x_test2, y_test2))
+model2.fit(x_train2, y_train2, epochs=num_epochs, batch_size=32, validation_data=(x_test2, y_test2))
 print('starting training ...')
 
 
@@ -134,3 +136,13 @@ for i in range(20):
      ' real data :', y_train[i] , ' test :', test_predictions[i], ' test2 :', test_predictions2[i],
       'real data :', y_test[i])
 
+
+df = pd.DataFrame(np.concatenate([train_predictions, train_predictions2, y_train], axis=1))
+filepath = 'testing_train_outout.xlsx'
+df.to_excel(filepath, index=False)
+print('saved testing train to excel file')
+
+df = pd.DataFrame(np.concatenate([test_predictions, test_predictions2, y_test], axis=1))
+filepath = 'testing_test_outout.xlsx'
+df.to_excel(filepath, index=False)
+print('saved testing test to excel file')
