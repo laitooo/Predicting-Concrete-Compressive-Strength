@@ -1,55 +1,72 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import math
-import utils
 import data
+import utils
+import os
+import numpy as np
+import tensorflow as tf
+from keras.models import Sequential
+from keras.layers import Dense, LayerNormalization, Dropout
 
-x_train, y_train, x_test, y_test, n = data.getData()
+SAVE_GRAPH = False
+SAVE_WEIGHTS = False
+SAVE_MODEL = True
+LOAD_WEIGHTS = False
+num_epochs = 1
 
-#print('plot shows cement before and after normalization')
-#utils.plotSingleRow(x_train[:,0], "cement o.p.c")
-#print('normalizing data ...')
-#x_train = ((x_train - x_train.min())/(x_train.max() - x_train.min()))
-#print('data normalized ')
-#utils.plotSingleRow(x_train[:,0], "cement o.p.c")
+tf.compat.v1.disable_eager_execution()
 
-print('initializing model ...')
-learning_rate = 0.05
-epochs = 200
-n1 = 10
-n2 = 5
-n3 = 2
-w1 = np.random.rand(n, n1) # (6,10)
-b1 = np.zeros((n1))              # (10,1)
-w2 = np.random.rand(n1, n2)      # (10,5)
-b2 = np.zeros((n2))              # (5,1)
-w3 = np.random.rand(n2, n3)      # (5,2)
-b3 = np.zeros((n3))              # (2,1)
+x_train, y_train, x_test, y_test, _ = data.getData()
 
-print('started trainning ...')
-for i in range(epochs+1):
-    A3, Z3, A2, Z2, A1, Z1 = utils.forwadProbagationStep(x_train, w1, b1, w2, b2, w3, b3)
+print('preparing model ...')
 
-    cost =  utils.costFunction(y_train, A3)
-    accuracy = utils.get_accuracy_value(y_train, A3)
-    if(i%100 == 0):
-        print('epoch', i, 'cost:', cost, 'accuracy:', accuracy)    
+model = Sequential()
+model.add(LayerNormalization(input_dim=6))
+model.add(Dense(160))
+model.add(Dense(80, activation='relu'))
+model.add(Dropout(0.2))
+model.add(Dense(40, activation='sigmoid'))
+model.add(Dense(20, activation='relu'))
+model.add(Dense(10, activation='sigmoid'))
+model.add(Dense(5, activation='relu'))
+model.add(Dense(2))
 
-    dw3 , db3, dw2, db2, dw1, db1 = utils.backwardPropagationStep(y_train, A3, Z3, w3, A2, Z2, w2, A1, Z1, x_train)
 
-    w3 = w3 + (learning_rate * dw3)
-    b3 = b3 + (learning_rate * db3)
-    w2 = w2 + (learning_rate * dw2)
-    b2 = b2 + (learning_rate * db2)
-    w1 = w1 + (learning_rate * dw1)
-    b1 = b1 + (learning_rate * db1)
-    #print('np.sum(dw3*alpha):', learning_rate*np.sum(dw3))
+if(LOAD_WEIGHTS):
+	print('loading model weights ...')
+	output_dir = os.path.join(os.getcwd(), "concrete")
+	model.load_weights(filepath=os.path.join(output_dir, "wights.h5"))
+	print('model weights loaded')
 
-print('testing againsta random test sample ...')
-idx = np.random.randint(x_test.shape[0])
-x_tmp = x_test[idx,:]
-y_tmp = y_test[idx,:]
-result, _, _, _, _, _ = utils.forwadProbagationStep(x_tmp, w1, b1, w2, b2, w3, b3)
-print('real outpt:', y_tmp)
-print('generated output', result)
+model.compile(loss='mean_squared_error', optimizer='adam', metrics=[tf.keras.metrics.MeanSquaredError()])
+model.fit(x_train, y_train, epochs=num_epochs, batch_size=32, validation_data=(x_test, y_test))
+print('starting training ...')
+
+if(SAVE_MODEL):
+	print('saving model ...')
+	model.save("my_model")
+	print('model saved')
+
+if(SAVE_WEIGHTS):
+	print('saving model weights ...')
+	output_dir = os.path.join(os.getcwd(), "concrete")
+	model.save_weights(filepath=os.path.join(output_dir, "wights.h5"))
+	print('model weights saved')
+
+_, accuracy_train = model.evaluate(x_train, y_train)
+_, accuracy_test = model.evaluate(x_test, y_test)
+print('model trained')
+
+print('Accuracy on train data: %.2f' % (accuracy_train*100))
+print('Accuracy on test data: %.2f' % (accuracy_test*100))
+
+train_predictions = np.around(model.predict(x_train), 1)
+test_predictions = np.around(model.predict(x_test), 1)
+
+for i in range(20):
+	print('train : predicted:', train_predictions[i], ' real data:', y_train[i] , ' test: predicted:', 
+		test_predictions[i], 'real data:', y_test[i])
+
+if(SAVE_GRAPH):
+	print('converting keras model to tensorflow ...')
+	output_dir = os.path.join(os.getcwd(),"concrete")
+	utils.keras_to_tensorflow(model,output_dir=output_dir,model_name="concrete.pb",log_tensorboard=True)
+	print("MODEL SAVED")

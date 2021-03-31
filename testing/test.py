@@ -1,21 +1,21 @@
 import pandas as pd
 import numpy as np
 import math
-import utils
 import tensorflow as tf
+from ..utils import utils
 from keras.models import Sequential
 from keras.layers import Dense, LayerNormalization, Dropout
 
 num_epochs = 2000
 
 print('loading the data ...')
-data = pd.read_excel('./test_data_v1.xlsx', header=1)   
+data = pd.read_excel('testing/test_data_v1.xlsx', header=1)   
 data = np.array(data)
 #data = data[:,1:]
 m = data.shape[0]
 print('data loaded with size: ', data.shape)
 
-if(utils.checkIfThereIsNan(data)):
+if(checkIfThereIsNan(data)):
     print('there is Nan in data')
 else:
     print('data is good')

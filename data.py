@@ -38,3 +38,11 @@ def getData():
     print('test output size:', y_test.shape)
     return x_train, y_train, x_test, y_test, n
 
+def getTestData():
+    x_train = np.arange(start=1, stop= 1200, step=2).reshape((300,2))
+    y_train = np.square(x_train) + 4
+    x_test = np.arange(start=1201, stop= 1600, step=2).reshape((100,2))
+    y_test = np.square(x_test) + 4
+    n = x_train.shape[1]
+    print('x:', x_train.shape)
+    return x_train, y_train, x_test, y_test, n
