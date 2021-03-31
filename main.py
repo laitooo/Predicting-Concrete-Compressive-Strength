@@ -1,5 +1,5 @@
 import data
-import utils
+from utils import utils
 import os
 import numpy as np
 import tensorflow as tf

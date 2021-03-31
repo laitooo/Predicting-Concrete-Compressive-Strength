@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import math
 import tensorflow as tf
-from ..utils import utils
+from utils import utils
 from keras.models import Sequential
 from keras.layers import Dense, LayerNormalization, Dropout
 
@@ -15,7 +15,7 @@ data = np.array(data)
 m = data.shape[0]
 print('data loaded with size: ', data.shape)
 
-if(checkIfThereIsNan(data)):
+if(utils.checkIfThereIsNan(data)):
     print('there is Nan in data')
 else:
     print('data is good')
@@ -43,7 +43,7 @@ print('test output size:', y_test.shape)
 
 
 print('loading the data2 ...')
-data2 = pd.read_excel('./test_data_v2.xlsx', header=1)   
+data2 = pd.read_excel('testing/test_data_v2.xlsx', header=1)   
 data2 = np.array(data2)
 #data = data[:,1:]
 m2 = data2.shape[0]
@@ -138,11 +138,11 @@ for i in range(20):
 
 
 df = pd.DataFrame(np.concatenate([train_predictions, train_predictions2, y_train], axis=1))
-filepath = 'testing_train_outout.xlsx'
+filepath = 'testing/testing_train_outout.xlsx'
 df.to_excel(filepath, index=False)
 print('saved testing train to excel file')
 
 df = pd.DataFrame(np.concatenate([test_predictions, test_predictions2, y_test], axis=1))
-filepath = 'testing_test_outout.xlsx'
+filepath = 'testing/testing_test_outout.xlsx'
 df.to_excel(filepath, index=False)
 print('saved testing test to excel file')
