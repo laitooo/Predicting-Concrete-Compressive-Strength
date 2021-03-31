@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import math
-import utils
+from utils import utils
 
 def getData():
     print('loading the data ...')

@@ -1,5 +1,5 @@
 import data
-import utils
+from utils import utils
 import os
 import numpy as np
 import tensorflow as tf
@@ -8,8 +8,9 @@ from keras.layers import Dense, LayerNormalization, Dropout
 
 SAVE_GRAPH = False
 SAVE_WEIGHTS = False
-SAVE_MODEL = False
+SAVE_MODEL = True
 LOAD_WEIGHTS = False
+num_epochs = 1
 
 tf.compat.v1.disable_eager_execution()
 
@@ -36,7 +37,7 @@ if(LOAD_WEIGHTS):
 	print('model weights loaded')
 
 model.compile(loss='mean_squared_error', optimizer='adam', metrics=[tf.keras.metrics.MeanSquaredError()])
-model.fit(x_train, y_train, epochs=1000, batch_size=32, validation_data=(x_test, y_test))
+model.fit(x_train, y_train, epochs=num_epochs, batch_size=32, validation_data=(x_test, y_test))
 print('starting training ...')
 
 if(SAVE_MODEL):

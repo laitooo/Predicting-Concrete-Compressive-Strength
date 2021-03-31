@@ -1,9 +1,4 @@
-__pycache__/utils.cpython-38.pyc
 main.py
-__pycache__/data.cpython-38.pyc
-__pycache__/tf_utils.cpython-38.pyc
-concrete/events.out.tfevents.1615022062.laitooo-HP-ProBook-4540s
-concrete/events.out.tfevents.1615009362.laitooo-HP-ProBook-4540s
-concrete/events.out.tfevents.1615009317.laitooo-HP-ProBook-4540s
-concrete/events.out.tfevents.1615010454.laitooo-HP-ProBook-4540s
+__pycache__
 node_modules
+.vscode
