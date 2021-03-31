@@ -1,5 +1,5 @@
 {
-    "name": "predicting-concrete-compressive-strength",
+    "name": "ai_concrete",
     "version": "1.0.0",
     "description": "Using Machine learning to predict the compressive strength of a concrete mixture",
     "main": "index.js",
