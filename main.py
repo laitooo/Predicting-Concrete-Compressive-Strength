@@ -10,7 +10,7 @@ SAVE_GRAPH = False
 SAVE_WEIGHTS = False
 SAVE_MODEL = True
 LOAD_WEIGHTS = False
-num_epochs = 1
+NUM_EPOCHS = 1
 
 tf.compat.v1.disable_eager_execution()
 
@@ -37,7 +37,7 @@ if(LOAD_WEIGHTS):
 	print('model weights loaded')
 
 model.compile(loss='mean_squared_error', optimizer='adam', metrics=[tf.keras.metrics.MeanSquaredError()])
-model.fit(x_train, y_train, epochs=num_epochs, batch_size=32, validation_data=(x_test, y_test))
+model.fit(x_train, y_train, epochs=NUM_EPOCHS, batch_size=32, validation_data=(x_test, y_test))
 print('starting training ...')
 
 if(SAVE_MODEL):
