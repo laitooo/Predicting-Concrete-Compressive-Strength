@@ -22,3 +22,10 @@ it saves results into excel file to make it easier when analysing the difference
 index.js is the nodejs server it serves the python model to the public/index.html page 
 
 data.xlsx contains simple complete data for testing the model
+
+missing_data folder contains sample of data collected in 2019 also
+it contains complete.py whice is used to complete the missing data using 3 method:
+- Treatment by Replacement with mean
+- Treatment by Predictive Imputation
+- Using algorithms that work with missing values
+(didn't finish the last 2 methods yet).

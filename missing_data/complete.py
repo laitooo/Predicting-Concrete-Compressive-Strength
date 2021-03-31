@@ -27,7 +27,19 @@ if(checkIfThereIsNan(x)):
 else:
     print('\nall input data is good')
 
-
-
-
 print('')
+
+
+print('Completing data using the average')
+x_2 = np.zeros(x.shape)
+
+for i in range(x.shape[1]):
+    tmp = x[:,i]
+    mean = np.mean(tmp[~pd.isna(tmp)])
+    correct = np.where(pd.isna(tmp), mean, tmp)
+    x_2[:,i] = correct
+
+df = pd.DataFrame(x_2)
+filepath = 'missing_data/completed_data_19_mean.xlsx'
+df.to_excel(filepath, index=False)
+print('saved completed data to excel file (using mean method)')
