@@ -7,15 +7,18 @@ from keras.models import Sequential
 tf.compat.v1.disable_eager_execution()
 
 
-NUM_EPOCHS = 2000
+NUM_EPOCHS = 15000
 SAVE_INPUT = False
+SAVE_OUTPUT = True
+INPUT_TITLE = 'amj_avg3.xlsx'
+OUTPUT_TITLE = 'amj_avg4.xlsx'
 TRAIN_MODEL_1 = False
 TRAIN_MODEL_2 = False
 TRAIN_MODEL_3 = True
 
 
 if (TRAIN_MODEL_1):
-	train1, test1 = data.getFinalData()
+	train1, test1 = data.getFinalData(INPUT_TITLE)
 	train1, test1 = data.prepareData(train1, test1, [16,17])
 	print('\n train1:', train1.shape)
 	xr1 = train1[:,0:14]
@@ -29,7 +32,7 @@ if (TRAIN_MODEL_1):
 		data.saveData(train1, 'train1.xlsx')
 
 if (TRAIN_MODEL_2):
-	train2, test2 = data.getFinalData()
+	train2, test2 = data.getFinalData(INPUT_TITLE)
 	train2, test2 = data.prepareData(train2, test2, [14, 15, 17])
 	xr2 = train2[:,0:14]
 	yr2 = train2[:,14:15]
@@ -42,7 +45,7 @@ if (TRAIN_MODEL_2):
 		data.saveData(train2, 'train2.xlsx')
 
 if (TRAIN_MODEL_3):
-	train3, test3 = data.getFinalData()
+	train3, test3 = data.getFinalData(INPUT_TITLE)
 	train3, test3 = data.prepareData(train3, test3, [14, 15, 16])
 	xr3 = train3[:,0:14]
 	yr3 = train3[:,14:15]
@@ -80,6 +83,9 @@ if (TRAIN_MODEL_1):
 	for i in range(20):
 		print(' test: predicted:', test_predictions[i], 'real data:', yt1[i])
 
+	if (SAVE_OUTPUT):
+		result = np.concatenate([test_predictions, yt1], axis=1)
+		data.saveData(result, OUTPUT_TITLE)
 
 
 
@@ -98,6 +104,9 @@ if (TRAIN_MODEL_2):
 	for i in range(20):
 		print(' test: predicted:', test_predictions[i], 'real data:', yt2[i])
 
+	if (SAVE_OUTPUT):
+		result = np.concatenate([test_predictions, yt2], axis=1)
+		data.saveData(result, OUTPUT_TITLE)
 
 
 
@@ -116,4 +125,6 @@ if (TRAIN_MODEL_3):
 	for i in range(20):
 		print(' test: predicted:', test_predictions[i], 'real data:', yt3[i])
 
-
+	if (SAVE_OUTPUT):
+		result = np.concatenate([test_predictions, yt3], axis=1)
+		data.saveData(result, OUTPUT_TITLE)

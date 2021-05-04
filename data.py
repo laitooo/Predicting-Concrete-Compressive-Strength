@@ -38,9 +38,9 @@ def getData():
     print('test output size:', y_test.shape)
     return x_train, y_train, x_test, y_test, n
 
-def getFinalData():
+def getFinalData(input):
     print('loading the data ...')
-    data = pd.read_excel('./data2.xlsx', header=1)
+    data = pd.read_excel(input, header=1)
     data = np.array(data)
     m = data.shape[0]
     print('data loaded with size: ', data.shape, '\n\n')
