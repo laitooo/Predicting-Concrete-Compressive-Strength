@@ -12,7 +12,7 @@ it contains :
 - NUM_EPOCHS : the number of trainning epochs
 
 data.py is used for getting data from excel file and converted to numpy array then shuffeled 
-and divided into input/output and trainning/test
+and divided into input/output and trainning/test and perpare and save data into excel file
 
 test.py is used for trainning and testing 2 models
 - when passing seive 0.6% mm and max concrete size is available
@@ -22,6 +22,7 @@ it saves results into excel file to make it easier when analysing the difference
 index.js is the nodejs server it serves the python model to the public/index.html page 
 
 data.xlsx contains simple complete data for testing the model
+data2.xlsx contains the final data for the project
 
 missing_data folder contains sample of data collected in 2019 also
 it contains complete.py whice is used to complete the missing data using 3 method:
@@ -30,6 +31,22 @@ it contains complete.py whice is used to complete the missing data using 3 metho
 - Treatment by Predictive Imputation (linear regression)
 - Using algorithms that work with missing values (not done yet)
 
-the result of the completed data will be found as excel file with the method name
 #note:
 some data columns were deleted (incomplete/strings/output)
+
+utils.py is used for:
+- checking if the data has n/a
+- plot the data 
+- initialize the model
+- convert keras model to tensorflow model
+
+visualize.py is used for plotting every column of the data each per time
+
+final.py is supposed to train the model with the final data 
+it containes: 
+- NUM_EPOCHS : the number of trainning epochs
+- SAVE_INPUT : to save the trainning and test data before starting the trainning
+- TRAIN_MODEL_1 : to decide if you want to train the first model which contains (slump and hardened density) as an outpu
+- TRAIN_MODEL_2 : to decide if you want to train the second model which contains (compressive strength after 7 days) as an output
+- TRAIN_MODEL_3 : to decide if you want to train the third model which contains (compressive strength after 28 days) as an output
+

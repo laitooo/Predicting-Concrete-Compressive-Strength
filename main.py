@@ -8,9 +8,9 @@ from keras.layers import Dense, LayerNormalization, Dropout
 
 SAVE_GRAPH = False
 SAVE_WEIGHTS = False
-SAVE_MODEL = True
+SAVE_MODEL = False
 LOAD_WEIGHTS = False
-NUM_EPOCHS = 1
+NUM_EPOCHS = 2000
 
 tf.compat.v1.disable_eager_execution()
 
@@ -18,17 +18,7 @@ x_train, y_train, x_test, y_test, _ = data.getData()
 
 print('preparing model ...')
 
-model = Sequential()
-model.add(LayerNormalization(input_dim=6))
-model.add(Dense(160))
-model.add(Dense(80, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(40, activation='sigmoid'))
-model.add(Dense(20, activation='relu'))
-model.add(Dense(10, activation='sigmoid'))
-model.add(Dense(5, activation='relu'))
-model.add(Dense(2))
-
+model = utils.newSeqentialModel(6,2)
 
 if(LOAD_WEIGHTS):
 	print('loading model weights ...')

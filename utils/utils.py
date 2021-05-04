@@ -1,9 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from keras.models import Model
-from keras.layers import *
+from keras.models import Model, Sequential
+from keras.layers.core import Dense, Dropout
+from keras.layers import LayerNormalization
 import os
 import tensorflow as tf
+
 
 def checkIfThereIsNan(array):
     for i in range(array.shape[0]):
@@ -11,11 +13,30 @@ def checkIfThereIsNan(array):
             return True
     return False
 
+def exceptionIfNan(array):
+    for i in range(array.shape[0]):
+        if(np.isnan(array[i]).any(axis=0)):
+            raise('\n\nThere is a Nan value in data\n\n')
+
 def plotSingleRow(array, ylabel):
     plt.figure()
     plt.plot(array)
     plt.ylabel(ylabel)
     plt.show()
+
+def newSeqentialModel(input, output):
+    model = Sequential()
+    model.add(LayerNormalization(input_dim=input))
+    model.add(Dense(160))
+    model.add(Dense(80, activation='relu'))
+    model.add(Dropout(0.2))
+    model.add(Dense(40, activation='sigmoid'))
+    model.add(Dense(20, activation='relu'))
+    model.add(Dense(10, activation='sigmoid'))
+    model.add(Dense(5, activation='relu'))
+    model.add(Dense(output))
+    return model
+
 
 def keras_to_tensorflow(keras_model, output_dir, model_name,out_prefix="output_", log_tensorboard=False):
 
