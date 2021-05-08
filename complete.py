@@ -2,14 +2,15 @@ import math
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+from utils import utils
 from scipy import stats
 from keras.models import Sequential
 from keras.layers import Dense, LayerNormalization, Dropout
 
 tf.compat.v1.disable_eager_execution()
 
-NUM_EPOCHS = 2000
-TITILE = 'final_data3'
+NUM_EPOCHS = 3000
+TITILE = 'our_data'
 COMPLETE_USING_MEAN = False
 COMPLETE_USING_MODE = False
 COMPLETE_USING_REGRESSION = True
@@ -22,7 +23,7 @@ def checkIfThereIsNan(array):
             tmp = True
     return tmp
 
-data = pd.read_excel('missing_data/' + TITILE + '.xlsx', header=0)
+data = pd.read_excel('data_files/' + TITILE + '.xlsx', header=0)
 data = np.array(data)
 x = data[:,0:21]
 y = data[:,21:25]
@@ -112,19 +113,11 @@ if COMPLETE_USING_REGRESSION:
     x_4 = np.delete(x_4, [2,3,4,5], 1)
     y_4 = np.copy(x_2_missing[:,2:6])
 
-    model = Sequential()
-    model.add(LayerNormalization(input_dim=10))
-    model.add(Dense(80, activation='relu'))
-    model.add(Dropout(0.2))
-    model.add(Dense(40, activation='sigmoid'))
-    model.add(Dense(20, activation='relu'))
-    model.add(Dense(10, activation='sigmoid'))
-    model.add(Dense(5, activation='relu'))
-    model.add(Dense(4))
+    model = utils.newSeqentialModel(10,4)
 
     print('\n\nstarting training ...')
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=[tf.keras.metrics.MeanSquaredError()])
-    model.fit(x_3, y_3, epochs=NUM_EPOCHS, batch_size=32, verbose=0)
+    model.fit(x_3, y_3, epochs=NUM_EPOCHS, batch_size=32, verbose=1)
     print('trainning finished')
 
     y_5 = np.zeros(y_4.shape)
