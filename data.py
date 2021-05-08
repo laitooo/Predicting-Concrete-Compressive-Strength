@@ -64,7 +64,12 @@ def getFinalData(input):
     return train, test
 
 
-def prepareData(train, test, removedColumns):
+def prepareData(test, removedColumns):
+    test = np.delete(test, removedColumns, axis=1)
+    test = np.array(pd.DataFrame(test).dropna(axis=0))
+    return test
+
+def prepareMultipleData(train, test, removedColumns):
     train = np.delete(train, removedColumns, axis=1)
     test = np.delete(test, removedColumns, axis=1)
     train = np.array(pd.DataFrame(train).dropna(axis=0))
@@ -75,3 +80,31 @@ def saveData(data, path):
     df = pd.DataFrame(data)
     df.to_excel(path, index=False)
     print('saved data to excel file \npath:', path)
+
+def getRandomTestData(input):
+    print('loading the data ...')
+    data = pd.read_excel(input, header=1)
+    data = np.array(data)
+    m = data.shape[0]
+    print('all data size: ', data.shape, '\n\n')
+
+    if(utils.checkIfThereIsNan(data)):
+        print('there is Nan in data')
+    else:
+        print('data is good')
+
+    np.random.shuffle(data)
+    print('\n\nshuffed the data ...')
+
+    print('\n\ndividing the data ...')
+    m_test = math.ceil(m * 0.15)
+    test = data[0:m_test,:]
+    print('test data size:', test.shape)
+    return test
+
+def getTestData(removedColumns):
+    data = pd.read_excel('data_files/test_data.xlsx', header=0)
+    data = np.array(data)
+    data = prepareData(data, removedColumns)
+    return data
+    

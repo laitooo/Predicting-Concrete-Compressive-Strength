@@ -3,7 +3,7 @@ import pandas as pd
 import data as dt
 
 print('loading the data ...')
-data = pd.read_excel('./amj_avg2.xlsx', header=1)
+data = pd.read_excel('data_files/our_data2.xlsx', header=1)
 data = np.array(data)
 p = np.zeros(data.shape)
 
@@ -18,4 +18,4 @@ for i in range(data.shape[1]):
     else:
         p[:, i] = np.around(data[:, i], 1)
     
-dt.saveData(p, 'amj_avg3.xlsx')
+dt.saveData(p, 'data_files/our_data3.xlsx')
