@@ -56,12 +56,15 @@ def getFinalData(input):
     print('data shuffled')
 
     print('\n\ndividing the data ...')
-    m_train = math.ceil(m * 0.75)
+    m_train = math.ceil(m * 0.7)
+    m_test = math.ceil(m * 0.15) + m_train
     train = data[0:m_train,:]
-    test = data[m_train:,:]
+    test = data[m_train:m_test,:]
+    validation = data[m_test:,:]
     print('training data ready with size:', train.shape)
     print('test data ready with size:', test.shape)
-    return train, test
+    print('validation data ready with size:', validation.shape)
+    return train, test, validation
 
 
 def prepareData(test, removedColumns):
@@ -69,12 +72,14 @@ def prepareData(test, removedColumns):
     test = np.array(pd.DataFrame(test).dropna(axis=0))
     return test
 
-def prepareMultipleData(train, test, removedColumns):
+def prepareMultipleData(train, test, validation, removedColumns):
     train = np.delete(train, removedColumns, axis=1)
     test = np.delete(test, removedColumns, axis=1)
+    validation = np.delete(validation, removedColumns, axis=1)
     train = np.array(pd.DataFrame(train).dropna(axis=0))
     test = np.array(pd.DataFrame(test).dropna(axis=0))
-    return train, test
+    validation = np.array(pd.DataFrame(validation).dropna(axis=0))
+    return train, test, validation
 
 def saveData(data, path):
     df = pd.DataFrame(data)
