@@ -33,7 +33,7 @@
 				<div class="row">
 					<div class="col-sm-6 bd">
 						<h3>Concrete Strength Prediction : </h3>
-						<br>
+					</br>
 						<p>The Compressive Strength of Concrete determines the quality of Concrete. This is generally
 							determined by a standard crushing test on a concrete cylinder. This requires engineers to
 							build small concrete cylinders with different combinations of raw materials and test these
@@ -54,21 +54,60 @@
 							<h4>Enter the details to predict:</h4>
 							<form action="http://0.0.0.0:3000/predict2" id="upload-file" method="post"
 								>
+								<p>Select coarse Aggregate type : </p>
+								<p><input type= "radio" name= "coarse_type" value= "1">
+								<label for="crushed_coarse">Crushed</label>
+								<input type= "radio" name= "coarse_type" value= "2">
+								<label for="natural_coarse">Natural</label></p>
+							
+								<p>Select fine Aggregate type : </p>
+								<p><input type= "radio" name= "fine_type" value= "1">
+								<label for="crushed_fine">Crushed</label>
+								<input type= "radio" name= "fine_type" value= "2">
+								<label for="natural_fine">Natural</label></p>
+
+								<p>Selecy maximum coarse aggregate size : </p>
+								<p><select name="max_size">
+									<option value ="10">10 mm</option>
+									<option value ="20">20 mm</option>
+									<option value ="40">40 mm</option>
+									</select> 
+									</p>
+
+								<p> Enter % passing seive 0.6 mm : </p>
+								<p> <input type="text" name="passing" /></p>
+
+								<p> Enter target mean strength : </p>
+								<p> <input type="text" name="target_mean" /></p>
+
+								<p>Selecy concrete grade : </p>
+								<p><select name="grade">
+									<option value ="15">15</option>
+									<option value ="20">20</option>
+									<option value ="25">25</option>
+									<option value ="28">28</option>
+									<option value ="30">30</option>
+									<option value ="35">35</option>
+									<option value ="40">40</option>
+									<option value ="45">45</option>
+									<option value ="50">50</option>
+									</select> 
+									</p>
+
 								<p> Enter Cement : </p>
 								<p> <input type="text" name="cement" /></p>
 								<p> Enter Water to cement ratio : </p>
 								<p> <input type="text" name="w_c" /></p>
 								<p> Enter Water content : </p>
 								<p> <input type="text" name="water" /></p>
-								<p> Enter Total Aggregate : </p>
-								<p> <input type="text" name="total" /></p>
-								<p> Enter Coarse Aggregate: </p>
+								<p> Enter additive dosage : </p>
+								<p> <input type="text" name="additive" /></p>
+								<p> Enter Coarse aggregate: </p>
 								<p> <input type="text" name="coarse" /></p>
 								<p> Enter Fine Aggregate: </p>
 								<p> <input type="text" name="fine" /></p>
 								<p> <input type="submit" value="Predict!" /></p>
 							</form>
-							<b>{{show}}</b>
 						</div>
 
 						<h3>

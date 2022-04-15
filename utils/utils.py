@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from keras.models import Model, Sequential
-from keras.layers.core import Dense, Dropout
-from keras.layers import LayerNormalization
+from tensorflow.keras.layers import LayerNormalization
+from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.layers import Dense, Dropout
 import os
 import tensorflow as tf
 
