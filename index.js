@@ -17,14 +17,19 @@ var io = Server();
 io.listen(server);
 
 
-var dir = path.join('./public');
-
-app.use(express.static(dir));
+var dir = path.join(__dirname + '/public/');
+console.log(dir);
+//app.use(express.static(dir));
+app.use(express.static(__dirname + '/public'));
 //app.use('*/images',express.static(dir));
 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "/public/test.html"));
+});
 
 app.get('/predict', function (req, res) {
     // 360, 0.45, 160, 1880, 715, 1165
@@ -47,8 +52,19 @@ app.post('/predict2', function (req, res) {
         mode: 'text',
         pythonOptions: ['-u'], // get print results in real-time
         scriptPath: '.',
-        args: [req.body.cement, req.body.w_c, req.body.water, req.body.total,
-           req.body.fine, req.body.coarse]
+        args: [
+          req.body.coarse_type,
+          req.body.fine_type,
+          req.body.max_size,
+          req.body.passing,
+          req.body.target_mean,
+          req.body.grade,
+          req.body.cement,
+          req.body.w_c,
+          req.body.water,
+          req.body.additive,
+          req.body.fine,
+          req.body.coarse]
       };
 
     PythonShell.run('predict.py', options, function (err, results) {
@@ -60,6 +76,6 @@ app.post('/predict2', function (req, res) {
 
 server.listen(port, hostname, () => {
 	console.log(`AI compressive strength server started`);
-	console.log(`server url : http://${hostname}:${port}/predict`);
+	console.log(`server url : http://${hostname}:${port}/`);
 	console.log("started at " + moment().format('YYYY-MM-DD HH:mm Z') + '\n\n');
 });
