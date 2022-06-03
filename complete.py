@@ -4,13 +4,13 @@ import pandas as pd
 import tensorflow as tf
 from utils import utils
 from scipy import stats
-from keras.models import Sequential
-from keras.layers import Dense, LayerNormalization, Dropout
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, LayerNormalization, Dropout
 
 tf.compat.v1.disable_eager_execution()
 
-NUM_EPOCHS = 3000
-TITILE = 'our_data'
+NUM_EPOCHS = 4000
+TITILE = 'ad7'
 COMPLETE_USING_MEAN = False
 COMPLETE_USING_MODE = False
 COMPLETE_USING_REGRESSION = True
@@ -25,14 +25,15 @@ def checkIfThereIsNan(array):
 
 data = pd.read_excel('data_files/' + TITILE + '.xlsx', header=0)
 data = np.array(data)
-x = data[:,0:21]
-y = data[:,21:25]
+#data = np.shuffle(data)
+x = data[:,0:13]
+y = data[:,13:17]
 
 
-x = x[:,4:21] # removed (index, date, location, type of coarse aggregate)
-x = np.delete(x, 1, 1)  #removed type of fine aggregate
-x = np.delete(x, 9, 1)  #removed additive name
-x = np.delete(x, 9, 1)  #removed additive group letter
+#x = x[:,4:21] # removed (index, date, location, type of coarse aggregate)
+#x = np.delete(x, 1, 1)  #removed type of fine aggregate
+#x = np.delete(x, 9, 1)  #removed additive name
+#x = np.delete(x, 9, 1)  #removed additive group letter
 
 print('\nX[0]:', x[0,:], '\nY[0]:', y[0,:])
 
@@ -93,7 +94,7 @@ if COMPLETE_USING_MODE:
 if COMPLETE_USING_REGRESSION:
     print('\nCompleting data using linear regression model')
     print('befor: x:', x.shape)
-    tmp = pd.DataFrame(x).dropna(subset=[0,1,6,7,8,9,10,11,12,13])
+    tmp = pd.DataFrame(x).dropna(subset=[0,1,4,5,6,7,8,9,10,11,12])
     x_2 = np.array(tmp)
     x_2_full = np.empty((0,x_2.shape[1]))
     x_2_missing = np.empty((0,x_2.shape[1]))
@@ -106,14 +107,14 @@ if COMPLETE_USING_REGRESSION:
     print('after: x_2:', x_2.shape, '\nx_2_full', x_2_full.shape, '\nx_2_missing', x_2_missing.shape)
 
     x_3 = np.copy(x_2_full)
-    x_3 = np.delete(x_3, [2,3,4,5], 1)
-    y_3 = np.copy(x_2_full[:,2:6])
+    x_3 = np.delete(x_3, [2,3], 1)
+    y_3 = np.copy(x_2_full[:,2:4])
 
     x_4 = np.copy(x_2_missing)
-    x_4 = np.delete(x_4, [2,3,4,5], 1)
-    y_4 = np.copy(x_2_missing[:,2:6])
+    x_4 = np.delete(x_4, [2,3], 1)
+    y_4 = np.copy(x_2_missing[:,2:4])
 
-    model = utils.newSeqentialModel(10,4)
+    model = utils.newSeqentialModel(11,2)
 
     print('\n\nstarting training ...')
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=[tf.keras.metrics.MeanSquaredError()])
@@ -137,17 +138,9 @@ if COMPLETE_USING_REGRESSION:
             y_5[i,1] = predictions[i,1]
         else:
             y_5[i,1] = y_4[i,1]
-        if(pd.isna(y_4[i,2])):
-            y_5[i,2] = predictions[i,2]
-        else:
-            y_5[i,2] = y_4[i,2]
-        if(pd.isna(y_4[i,3])):
-            y_5[i,3] = predictions[i,3]
-        else:
-            y_5[i,3] = y_4[i,3]
 
-    complete = np.concatenate([x_3[:,0:2], y_3, x_3[:,2:14]], axis=1)
-    missing = np.concatenate([x_4[:,0:2], y_5, x_4[:,2:14]], axis=1)
+    complete = np.concatenate([x_3[:,0:2], y_3, x_3[:,2:17]], axis=1)
+    missing = np.concatenate([x_4[:,0:2], y_5, x_4[:,2:17]], axis=1)
     full_data = np.concatenate([complete, missing], axis= 0)
     final_data = np.concatenate([full_data, y], axis= 1)
 
