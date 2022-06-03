@@ -25,7 +25,9 @@ The output:
 - compressive strength after 28 days
 - fresh concrete slump
 
-To run the model :
+For running the latest model, the data should be similar to (additives data)[https://github.com/laitooo/Predicting-Concrete-Compressive-Strength/blob/additives-data/data_files/additives2.xlsx].
+
+To run the model you can run the (google colab)[https://github.com/laitooo/Predicting-Concrete-Compressive-Strength/blob/main/ANN_Concrete.ipynb].
 
 A website for testing the model was developed using html, css and javascript.
 The server was developed useing node.js with express.
