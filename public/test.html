@@ -35,10 +35,10 @@
 						<h3>Concrete Strength Prediction : </h3>
 					</br>
 						<p>The Compressive Strength of Concrete determines the quality of Concrete. This is generally
-							determined by a standard crushing test on a concrete cylinder. This requires engineers to
-							build small concrete cylinders with different combinations of raw materials and test these
-							cylinders for strength variations with a change in each raw material. The recommended wait
-							time for testing the cylinder is 28 days to ensure correct results. This consumes a lot of
+							determined by a standard crushing test on a concrete cube. This requires engineers to
+							build small concrete cubes with different combinations of raw materials and test these
+							cubes for strength variations with a change in each raw material. The recommended wait
+							time for testing the cube is 28 days to ensure correct results. This consumes a lot of
 							time and requires a lot of labour to prepare different prototypes and test them. Also, this
 							method is prone to human error and one small mistake can cause the wait time to drastically
 							increase.</p>
@@ -46,8 +46,6 @@
 							style="height:300px" class="img-rounded" alt="Gesture">
 						<p> The following figure depicts the Depenency of Concrete Strenght on Age, Water and Cement.
 						</p>
-						<img src="https://miro.medium.com/max/1356/0*sAelcVaW6FCAnz-I.png" style="height:300px"
-							class="img-rounded" alt="Gesture">
 					</div>
 					<div class="col-sm-6">
 						<div>
@@ -77,23 +75,6 @@
 								<p> Enter % passing seive 0.6 mm : </p>
 								<p> <input type="text" name="passing" /></p>
 
-								<p> Enter target mean strength : </p>
-								<p> <input type="text" name="target_mean" /></p>
-
-								<p>Selecy concrete grade : </p>
-								<p><select name="grade">
-									<option value ="15">15</option>
-									<option value ="20">20</option>
-									<option value ="25">25</option>
-									<option value ="28">28</option>
-									<option value ="30">30</option>
-									<option value ="35">35</option>
-									<option value ="40">40</option>
-									<option value ="45">45</option>
-									<option value ="50">50</option>
-									</select> 
-									</p>
-
 								<p> Enter Cement : </p>
 								<p> <input type="text" name="cement" /></p>
 								<p> Enter Water to cement ratio : </p>
@@ -102,6 +83,31 @@
 								<p> <input type="text" name="water" /></p>
 								<p> Enter additive dosage : </p>
 								<p> <input type="text" name="additive" /></p>
+
+								<p> Enter additive name : </p>
+								<p><select name="additive_index">
+									<option value="0">None</option>
+									<option value="1">Kemflow</option>
+									<option value="2">Kemflow 2008R</option>
+									<option value="3">Yaracon SP630</option>
+									<option value="4">SP901</option>
+									<option value="5">Yara con SP635</option>
+									<option value="6">Yara</option>
+									<option value="7">Yaracon</option>
+									<option value="8">Conplast SP 432</option>
+									<option value="9">Conplast 432</option>
+									<option value="10">Sp 432</option>
+									<option value="11">X-mix</option>
+									<option value="12">Sikament 2004</option>
+									<option value="13">Sikament R2004</option>
+									<option value="14">Type 8600</option>
+									<option value="15">Mape fluid N469</option>
+									<option value="16">Sp102</option>
+									<option value="4">Type G</option>
+									<option value="5">Type F</option>
+									</select> 
+								</p>
+
 								<p> Enter Coarse aggregate: </p>
 								<p> <input type="text" name="coarse" /></p>
 								<p> Enter Fine Aggregate: </p>
