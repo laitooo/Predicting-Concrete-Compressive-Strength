@@ -1,6 +1,8 @@
 # Predicting-Concrete-Compressive-Strength (Sudan)
 
-Graduation project from the university of Khartoum faculty of civil engineering
+Graduation project from the university of Khartoum faculty of civil engineering.
+
+The results gathered in this project was later published on the proceeding of the 10th INAT conference (International network of appropriate technology). You can read the paper using this [Link](https://laitooo.vercel.app/files/10th_ICAT_file_23.docx).
 
 An artificial neural network model was developed using keras (python) to predict the compressive strength of concrete mixture after 7 and 28 days. and also predict the slump of concrete.
 
